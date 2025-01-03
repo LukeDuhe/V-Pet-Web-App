@@ -11,9 +11,8 @@ Rails.application.routes.draw do
   Rails.application.routes.draw do
     namespace :api do
       namespace :v1 do
-        resources :users
-        # Add other resources
+        resources :pets, only: [:index]
       end
     end
-  end
+  end  
 end

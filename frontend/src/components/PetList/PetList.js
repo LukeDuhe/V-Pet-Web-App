@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AppBar, Toolbar, IconButton, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Sidebar from '../Sidebar/Sidebar';
 import Login from '../Login/Login';
-import PetList from '../PetList/PetList';
 
-function Home() {
+function PetList() {
+    const [pets, setPets] = useState([]);
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('');
     const [sidebarOpen, setSidebarOpen] = useState(false);
-
-    const handleLogin = (user) => {
-        setIsLoggedIn(true);
-        setUsername(user);
-    };
 
     const handleLogout = () => {
         setIsLoggedIn(false);
@@ -21,11 +17,16 @@ function Home() {
         setSidebarOpen(false);
     };
 
-    if (!isLoggedIn) {
-        return <Login onLogin={handleLogin} />;
-    }
+    useEffect(() => {
+        fetch('http://localhost:3001/api/v1/pets')
+            .then(response => response.json())
+            .then(data => setPets(data))
+            .catch(error => console.error('Error:', error));
+    }, []);
 
     return (
+
+
         <div>
             <AppBar position="static">
                 <Toolbar>
@@ -49,17 +50,18 @@ function Home() {
                 username={username}
             />
 
-            <div style={{ padding: 20 }}>
-                <p>Click the button below to get the current time.</p>
-                <button onClick={() => {
-                    document.getElementById('time').innerText = new Date().toLocaleTimeString();
-                }}>
-                    Get Time
-                </button>
-                <p id="time"></p>
+            <div>
+                <h2>My Pets</h2>
+                {pets.map(pet => (
+                    <div key={pet.id}>
+                        <h3>{pet.name}</h3>
+                        <p>Species: {pet.species}</p>
+                        <p>Happiness: {pet.happiness}</p>
+                    </div>
+                ))}
             </div>
         </div>
     );
 }
 
-export default Home;
+export default PetList;
