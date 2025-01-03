@@ -76,3 +76,5 @@ public/assets/
 **/.cache
 **/compile-cache-iseq/
 **/cache/
+*.key
+*.enc

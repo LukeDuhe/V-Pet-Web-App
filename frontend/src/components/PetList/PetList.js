@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Container, Box, Card, CardContent, CircularProgress, Alert } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Container, Box, Card, CardMedia, CardContent, CircularProgress, Alert } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Sidebar from '../Sidebar/Sidebar';
 import Login from '../Login/Login';
@@ -100,6 +100,20 @@ function PetList() {
                         width: '100%',  // cards take full container width
                         minWidth: 280   // minimum width for readability
                     }}>
+                        <CardMedia
+                            component="img"
+                            height="200"
+                            image={pet.imageUrl || 'bear-pet.gif'}
+                            alt={pet.name}
+                            sx={{
+                                objectFit: 'contain',
+                                backgroundColor: 'background.paper'
+                            }}
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = 'bear-pet.gif';
+                            }}
+                        />
                         <CardContent>
                             <Typography variant="h5" gutterBottom>
                                 {pet.name}
