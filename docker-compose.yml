@@ -20,6 +20,8 @@ services:
       - POSTGRES_DB=myapp_development
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
+    env_file:
+      - .env
     volumes:
       - ./backend/vpet:/app
     depends_on:
