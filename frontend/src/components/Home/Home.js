@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import styles from './Home.css';
+import { AppBar, Toolbar, IconButton, Typography } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import Sidebar from '../Sidebar/Sidebar';
 import Login from '../Login/Login';
 
 function Home() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('');
-
-    const getTime = () => {
-        document.getElementById('time').innerText = new Date().toLocaleTimeString();
-    };
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const handleLogin = (user) => {
         setIsLoggedIn(true);
@@ -18,6 +17,7 @@ function Home() {
     const handleLogout = () => {
         setIsLoggedIn(false);
         setUsername('');
+        setSidebarOpen(false);
     };
 
     if (!isLoggedIn) {
@@ -25,17 +25,38 @@ function Home() {
     }
 
     return (
-        <div className={styles.container}>
-            <div className={styles.header}>
-                <h1 className={styles.title}>Personal Web Application</h1>
-                <div className={styles.userInfo}>
-                    Welcome, {username}!
-                    <button onClick={handleLogout}>Logout</button>
-                </div>
+        <div>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        onClick={() => setSidebarOpen(true)}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        Personal Web Application
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+
+            <Sidebar
+                open={sidebarOpen}
+                onClose={() => setSidebarOpen(false)}
+                onLogout={handleLogout}
+                username={username}
+            />
+
+            <div style={{ padding: 20 }}>
+                <p>Click the button below to get the current time.</p>
+                <button onClick={() => {
+                    document.getElementById('time').innerText = new Date().toLocaleTimeString();
+                }}>
+                    Get Time
+                </button>
+                <p id="time"></p>
             </div>
-            <p className={styles.text}>Click the button below to get the current time.</p>
-            <button className={styles.button} onClick={getTime}>Get Time</button>
-            <p id="time" className={styles.time}></p>
         </div>
     );
 }

@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import styles from './Login.css';
+import {
+    TextField,
+    Button,
+    Container,
+    Paper,
+    Typography,
+    Alert
+} from '@mui/material';
 
 function Login({ onLogin }) {
     const [username, setUsername] = useState('');
@@ -8,7 +15,6 @@ function Login({ onLogin }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // In a real app, validate against backend
         if (username === 'admin' && password === 'password123') {
             onLogin(username);
             setError('');
@@ -18,29 +24,39 @@ function Login({ onLogin }) {
     };
 
     return (
-        <div className={styles.loginContainer}>
-            <form onSubmit={handleSubmit}>
-                <h2>Login</h2>
-                {error && <p className={styles.error}>{error}</p>}
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Username"
+        <Container maxWidth="sm">
+            <Paper elevation={3} sx={{ p: 4, mt: 8 }}>
+                <Typography variant="h4" gutterBottom>
+                    Login
+                </Typography>
+                {error && <Alert severity="error">{error}</Alert>}
+                <form onSubmit={handleSubmit}>
+                    <TextField
+                        fullWidth
+                        margin="normal"
+                        label="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
-                </div>
-                <div>
-                    <input
+                    <TextField
+                        fullWidth
+                        margin="normal"
                         type="password"
-                        placeholder="Password"
+                        label="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                </div>
-                <button type="submit">Login</button>
-            </form>
-        </div>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        type="submit"
+                        sx={{ mt: 2 }}
+                    >
+                        Login
+                    </Button>
+                </form>
+            </Paper>
+        </Container>
     );
 }
 
