@@ -64,3 +64,15 @@ Thumbs.dbnode_modules/
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Rails specific #
+#################
+tmp/
+log/
+.bundle/
+vendor/bundle/
+public/assets/
+*.cache
+**/.cache
+**/compile-cache-iseq/
+**/cache/
