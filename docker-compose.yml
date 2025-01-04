@@ -14,7 +14,7 @@ services:
     build:
       context: ./backend/vpet
     ports:
-      - "4000:4000"
+      - "3001:3001"
     environment:
       - POSTGRES_HOST=db
       - POSTGRES_DB=myapp_development
