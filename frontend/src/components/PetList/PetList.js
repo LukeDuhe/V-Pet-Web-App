@@ -25,7 +25,7 @@ function PetList() {
             try {
                 setLoading(true);
 
-                const response = await fetch('http://192.168.0.229:3001/api/v1/pets');
+                const response = await fetch('http://localhost:3001/api/v1/pets');
                 console.log('API Response:', response); // Debug log
                 if (!response.ok) throw new Error('Failed to fetch');
                 const data = await response.json();
